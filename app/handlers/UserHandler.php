@@ -6,6 +6,8 @@ use InvalidArgumentException;
 use service\exceptions\ServiceException;
 use service\UserServiceInterface;
 use function app\sendResponse;
+use function app\validatePresenceOfFields;
+use function util\getPostRequest;
 use const app\BAD_REQUEST;
 
 class UserHandler
@@ -19,24 +21,10 @@ class UserHandler
 
     function signIn($args)
     {
-        $request = json_decode(file_get_contents('php://input'), true);
-        if (is_null($request))
-        {
-            $request = $args;
-        }
-        else
-        {
-            $request = array_merge($request, $args);
-        }
+        $request = getPostRequest($args);
+        if (!validatePresenceOfFields($request, ['username', 'password', 'full_name']))
+            return;
 
-        foreach (['username', 'password', 'full_name'] as $field)
-        {
-            if (!isset($request[$field]))
-            {
-                sendResponse(BAD_REQUEST, "Field '" . $field . "' is required");
-                return;
-            }
-        }
         try
         {
             $id = $this->service->createNew($request['username'], $request['password'], $request['full_name']);
@@ -51,24 +39,9 @@ class UserHandler
 
     function logIn($args)
     {
-        $request = json_decode(file_get_contents('php://input'), true);
-        if (is_null($request))
-        {
-            $request = $args;
-        }
-        else
-        {
-            $request = array_merge($request, $args);
-        }
-
-        foreach (['username', 'password'] as $field)
-        {
-            if (!isset($request[$field]))
-            {
-                sendResponse(BAD_REQUEST, "Field '" . $field . "' is required");
-                return;
-            }
-        }
+        $request = getPostRequest($args);
+        if (!validatePresenceOfFields($request, ['username', 'password']))
+            return;
 
         try
         {
