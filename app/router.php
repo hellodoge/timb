@@ -36,6 +36,10 @@ function initPostsRoutes(Router $router, PostHandler $handler)
     $router->GET('recent', function($args) use ($handler) {
         $handler->getRecent($args);
     });
+
+    $router->GET('post', function($args) use ($handler) {
+        $handler->getByID($args);
+    });
 }
 
 function initAuthRoutes(Router $router, UserHandler $handler)

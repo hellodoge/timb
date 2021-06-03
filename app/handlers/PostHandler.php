@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use service\PostServiceInterface;
 use function app\sendResponse;
 use const app\BAD_REQUEST;
+use const app\NOT_FOUND;
 
 class PostHandler
 {
@@ -40,5 +41,21 @@ class PostHandler
             return;
         }
         echo json_encode($result_set);
+    }
+
+    public function getByID($args)
+    {
+        if (!isset($args['id']))
+        {
+            sendResponse(BAD_REQUEST, "'id' parameter required");
+            return;
+        }
+        $post = $this->service->getPostByID(intval($args['id']));
+        if (is_null($post))
+        {
+            sendResponse(NOT_FOUND, "post with given id not found");
+            return;
+        }
+        echo json_encode(["post"=>$post]);
     }
 }
