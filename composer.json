@@ -1,0 +1,32 @@
+{
+    "name": "hellodoge/timb",
+    "description": "Microblog",
+    "type": "project",
+    "authors": [
+        {
+            "name": "waldemar",
+            "email": "hellodoge@tuta.io"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "vlucas/phpdotenv": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/",
+            "app\\handlers\\": "app/handlers",
+            "models\\": "models/",
+            "router\\": "router/",
+            "repository\\": "repository/",
+            "repository\\models\\": "repository/models/",
+            "repository\\models\\postgres\\": "repository/models/postgres/",
+            "repository\\exceptions\\": "repository/exceptions/",
+            "service\\": "service/"
+        },
+        "files": [
+            "app/router.php",
+            "app/errors.php"
+        ]
+    }
+}

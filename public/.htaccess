@@ -1,0 +1,6 @@
+DirectoryIndex index.php
+
+RewriteEngine on
+RewriteBase /
+
+RewriteRule ^(.*)$ index.php [QSA]
