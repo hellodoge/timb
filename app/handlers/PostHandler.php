@@ -22,8 +22,8 @@ class PostHandler
         $result_set = array();
         try
         {
-            $limit = $args['limit'] ? intval($args['limit']) : self::LIMIT_DEFAULT;
-            $offset = $args['offset'] ? intval($args['offset']) : 0;
+            $limit = isset($args['limit']) ? intval($args['limit']) : self::LIMIT_DEFAULT;
+            $offset = isset($args['offset']) ? intval($args['offset']) : 0;
             if ($limit > self::LIMIT_MAX)
             {
                 throw new InvalidArgumentException(
