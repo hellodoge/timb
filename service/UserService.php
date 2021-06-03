@@ -21,6 +21,7 @@ class UserService implements UserServiceInterface
     const USERNAME_MAX_LENGTH = 64;
     const FULL_NAME_MAX_LENGTH = 256;
     const PASSWORD_MIN_LENGTH = 4;
+    const JWT_ALGORITHM = "HS256";
 
     public function __construct(UserRepositoryInterface $repo, UserServiceConfig $config)
     {
@@ -116,7 +117,7 @@ class UserService implements UserServiceInterface
             'sub'=>$user->id
         );
 
-        return JWT::encode($payload, $this->config->secret_key);
+        return JWT::encode($payload, $this->config->secret_key, self::JWT_ALGORITHM);
     }
 
     /**
@@ -127,7 +128,7 @@ class UserService implements UserServiceInterface
     {
         try
         {
-            $token = JWT::decode($token, $this->config->secret_key);
+            $token = (array) JWT::decode($token, $this->config->secret_key, [self::JWT_ALGORITHM]);
             return $token['sub'];
         }
         catch (Exception $e)
