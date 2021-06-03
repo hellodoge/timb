@@ -10,7 +10,7 @@ use repository\exceptions\QueryNotFoundException;
 abstract class Database extends Repository
 {
     protected ?PDO $connection;
-    protected string $queries_folder = '../queries';
+    protected string $queries_folder = 'queries';
 
     function __construct($dsn, $username, $password)
     {
