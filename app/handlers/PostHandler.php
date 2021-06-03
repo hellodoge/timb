@@ -34,7 +34,7 @@ class PostHandler
         }
         catch (InvalidArgumentException $e)
         {
-            sendErrorResponse(BAD_REQUEST, $e->getMessage());
+            sendResponse(BAD_REQUEST, $e->getMessage());
             return;
         }
         echo json_encode($result_set);
