@@ -2,7 +2,6 @@
 
 namespace app\handlers;
 
-use InvalidArgumentException;
 use service\exceptions\ServiceException;
 use service\UserServiceInterface;
 use function app\sendResponse;
@@ -30,7 +29,7 @@ class UserHandler
             $id = $this->service->createNew($request['username'], $request['password'], $request['full_name']);
             echo json_encode(["id"=>$id]);
         }
-        catch (InvalidArgumentException $e)
+        catch (ServiceException $e)
         {
             sendResponse(BAD_REQUEST, $e->getMessage());
             return;

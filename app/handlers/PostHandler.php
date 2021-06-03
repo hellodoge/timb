@@ -2,7 +2,8 @@
 
 namespace app\handlers;
 
-use InvalidArgumentException;
+use service\exceptions\InvalidArgumentException;
+use service\exceptions\ServiceException;
 use service\PostServiceInterface;
 use function app\sendResponse;
 use const app\BAD_REQUEST;
@@ -35,7 +36,7 @@ class PostHandler
             }
             $result_set['posts'] = $this->service->getRecent($limit, $offset);
         }
-        catch (InvalidArgumentException $e)
+        catch (ServiceException $e)
         {
             sendResponse(BAD_REQUEST, $e->getMessage());
             return;

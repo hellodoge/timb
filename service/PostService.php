@@ -2,7 +2,7 @@
 
 namespace service;
 
-use http\Exception\InvalidArgumentException;
+use service\exceptions\InvalidArgumentException;
 use models\Post;
 use repository\models\PostRepositoryInterface;
 

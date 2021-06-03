@@ -5,7 +5,7 @@ namespace service;
 use DateTimeImmutable;
 use Exception;
 use Firebase\JWT\JWT;
-use InvalidArgumentException;
+use service\exceptions\InvalidArgumentException;
 use models\User;
 use repository\models\UserRepositoryInterface;
 use service\exceptions\InvalidCredentials;
