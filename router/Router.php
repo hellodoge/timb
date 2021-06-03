@@ -3,6 +3,7 @@
 namespace router;
 
 use Exception;
+use function app\internalServerErrorResponse;
 
 class Router
 {

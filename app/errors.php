@@ -1,5 +1,7 @@
 <?php
 
+namespace app;
+
 const INTERNAL_SERVER_ERROR = 500;
 const NOT_FOUND = 404;
 const BAD_REQUEST = 400;

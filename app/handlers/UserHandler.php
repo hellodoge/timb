@@ -5,6 +5,8 @@ namespace app\handlers;
 use InvalidArgumentException;
 use service\exceptions\ServiceException;
 use service\UserServiceInterface;
+use function app\sendResponse;
+use const app\BAD_REQUEST;
 
 class UserHandler
 {
