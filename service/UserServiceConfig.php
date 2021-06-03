@@ -4,6 +4,7 @@ namespace service;
 
 use DateInterval;
 use Exception;
+use function util\printStackTrace;
 
 class UserServiceConfig
 {
@@ -20,7 +21,7 @@ class UserServiceConfig
         }
         catch (Exception $e)
         {
-            fwrite(fopen('php://stderr', 'w'), $e->getTraceAsString() . PHP_EOL);
+            printStackTrace($e);
             return new DateInterval(self::DEFAULT_JWT_TOKEN_LIFETIME);
         }
     }

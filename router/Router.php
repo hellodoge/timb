@@ -4,6 +4,7 @@ namespace router;
 
 use Exception;
 use function app\internalServerErrorResponse;
+use function util\printStackTrace;
 
 class Router
 {
@@ -29,7 +30,7 @@ class Router
             catch (Exception $e)
             {
                 internalServerErrorResponse();
-                fwrite(fopen('php://stderr', 'w'), $e->getTraceAsString() . PHP_EOL);
+                printStackTrace($e);
                 return;
             }
         }
