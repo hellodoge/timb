@@ -29,6 +29,8 @@ class UserService implements UserServiceInterface
      */
     public function createNew(string $username, string $password, string $full_name): int
     {
+        $username = strtolower($username);
+
         $regex_check = preg_match(self::USERNAME_REGEX, $username);
         if ($regex_check === false)
         {
