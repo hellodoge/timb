@@ -7,7 +7,7 @@ use service\UserServiceInterface;
 
 const BEARER_TOKEN_PREFIX = "Bearer ";
 
-function GetUserId(UserServiceInterface $service): ?int
+function getUserID(UserServiceInterface $service): ?int
 {
     if (!isset($_SERVER['HTTP_AUTHORIZATION']))
     {
