@@ -43,4 +43,8 @@ function initAuthRoutes(Router $router, UserHandler $handler)
     $router->POST('sign-in', function($args) use ($handler) {
         $handler->signIn($args);
     });
+
+    $router->POST('log-in', function($args) use ($handler) {
+        $handler->logIn($args);
+    });
 }
