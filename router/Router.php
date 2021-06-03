@@ -28,7 +28,7 @@ class Router
             catch (Exception $e)
             {
                 internalServerErrorResponse();
-                fwrite(STDERR, $e->getTraceAsString() . PHP_EOL);
+                fwrite(fopen('php://stderr', 'w'), $e->getTraceAsString() . PHP_EOL);
                 return;
             }
         }
