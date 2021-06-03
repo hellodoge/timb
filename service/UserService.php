@@ -118,4 +118,21 @@ class UserService implements UserServiceInterface
 
         return JWT::encode($payload, $this->config->secret_key);
     }
+
+    /**
+     * @return int user id
+     * @throws InvalidCredentials
+     */
+    public function parseToken(string $token): int
+    {
+        try
+        {
+            $token = JWT::decode($token, $this->config->secret_key);
+            return $token['sub'];
+        }
+        catch (Exception $e)
+        {
+            throw new InvalidCredentials($e->getMessage());
+        }
+    }
 }
