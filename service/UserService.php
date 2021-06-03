@@ -2,14 +2,18 @@
 
 namespace service;
 
+use DateTimeImmutable;
 use Exception;
+use Firebase\JWT\JWT;
 use InvalidArgumentException;
 use models\User;
 use repository\models\UserRepositoryInterface;
+use service\exceptions\InvalidCredentials;
 
 class UserService implements UserServiceInterface
 {
     private UserRepositoryInterface $repo;
+    private UserServiceConfig $config;
 
     // must start with letter, and consist of alphanumeric/underscores
     const USERNAME_REGEX = "/^[a-z]+[a-z0-9_]*$/i";
@@ -18,9 +22,10 @@ class UserService implements UserServiceInterface
     const FULL_NAME_MAX_LENGTH = 256;
     const PASSWORD_MIN_LENGTH = 4;
 
-    public function __construct(UserRepositoryInterface $repo)
+    public function __construct(UserRepositoryInterface $repo, UserServiceConfig $config)
     {
         $this->repo = $repo;
+        $this->config = $config;
     }
 
     /**
@@ -85,5 +90,32 @@ class UserService implements UserServiceInterface
         $user->setPasswordHash($password_hash);
 
         return $this->repo->createNew($user);
+    }
+
+    /**
+     * @throws InvalidCredentials
+     */
+    public function generateToken(string $username, string $password): string
+    {
+        $username = strtolower($username);
+        $user = $this->repo->getByUsername($username);
+        if (is_null($user))
+        {
+            throw new InvalidCredentials("User with given username not found");
+        }
+
+        if (!password_verify($password, $user->getPasswordHash()))
+        {
+            throw new InvalidCredentials("Password did not match");
+        }
+
+        $issued_at = new DateTimeImmutable();
+        $payload = array(
+            'iat'=>$issued_at->getTimestamp(),
+            'exp'=>$issued_at->add($this->config->getTokenLifetime())->getTimestamp(),
+            'sub'=>$user->id
+        );
+
+        return JWT::encode($payload, $this->config->secret_key);
     }
 }
