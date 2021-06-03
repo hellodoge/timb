@@ -15,6 +15,7 @@ class PostRepositoryPostgres implements PostRepositoryInterface
 
     const GET_RECENT_QUERY_FILENAME = 'get_recent_posts.sql';
     const GET_POST_BY_ID_QUERY_FILENAME = 'get_post_by_id.sql';
+    const CREATE_POST_QUERY_FILENAME = 'create_post.sql';
 
     public function __construct($db)
     {
@@ -58,5 +59,22 @@ class PostRepositoryPostgres implements PostRepositoryInterface
         if ($post == false)
             return null;
         return $post;
+    }
+
+    /**
+     * @throws ConnectionIsNullException
+     * @throws FailedReadingQueryException
+     */
+    public function createPost(int $author, ?int $reply_to, string $text): int
+    {
+        static $query = null;
+        if (is_null($query))
+        {
+            $query = $this->db->readQuery(PostRepositoryPostgres::CREATE_POST_QUERY_FILENAME);
+        }
+        $stmt = $this->db->getConnection()->prepare($query);
+
+        $stmt->execute(["author"=>$author, "reply_to"=>$reply_to, "text"=>$text]);
+        return $stmt->fetch()['id'];
     }
 }
