@@ -6,8 +6,11 @@ use service\exceptions\InvalidArgumentException;
 use service\exceptions\ServiceException;
 use service\PostServiceInterface;
 use function app\sendResponse;
+use function app\validatePresenceOfFields;
+use function util\getPostRequest;
 use const app\BAD_REQUEST;
 use const app\NOT_FOUND;
+use const app\USER_ID_CONTEXT_KEY;
 
 class PostHandler
 {
@@ -58,5 +61,24 @@ class PostHandler
             return;
         }
         echo json_encode(["post"=>$post]);
+    }
+
+    public function create($context)
+    {
+        $request = getPostRequest($_POST);
+        if (!validatePresenceOfFields($request, ['text']))
+            return;
+
+        try
+        {
+            $reply_to_id = isset($request['reply_to']) ? intval($request['reply_to']) : null;
+            $id = $this->service->createPost($context[USER_ID_CONTEXT_KEY], $reply_to_id, $request['text']);
+            echo json_encode(["id"=>$id]);
+        }
+        catch (ServiceException $e)
+        {
+            sendResponse(BAD_REQUEST, $e->getMessage());
+            return;
+        }
     }
 }
