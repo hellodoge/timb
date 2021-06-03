@@ -29,6 +29,7 @@
             "app/router.php",
             "app/errors.php",
             "app/util.php",
+            "app/middleware.php",
             "util/request.php",
             "util/errors.php"
         ]
