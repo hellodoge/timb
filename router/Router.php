@@ -25,7 +25,7 @@ class Router
         {
             try
             {
-                call_user_func_array($callback, array(array_merge($_GET, $_POST)));
+                call_user_func($callback);
             }
             catch (Exception $e)
             {

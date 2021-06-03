@@ -18,9 +18,9 @@ class UserHandler
         $this->service = $service;
     }
 
-    function signIn($args)
+    function signIn($context)
     {
-        $request = getPostRequest($args);
+        $request = getPostRequest($_POST);
         if (!validatePresenceOfFields($request, ['username', 'password', 'full_name']))
             return;
 
@@ -36,9 +36,9 @@ class UserHandler
         }
     }
 
-    function logIn($args)
+    function logIn($context)
     {
-        $request = getPostRequest($args);
+        $request = getPostRequest($_POST);
         if (!validatePresenceOfFields($request, ['username', 'password']))
             return;
 

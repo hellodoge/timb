@@ -6,6 +6,7 @@ use service\exceptions\ServiceException;
 use service\UserServiceInterface;
 
 const BEARER_TOKEN_PREFIX = "Bearer ";
+const USER_ID_CONTEXT_KEY = "user-id";
 
 function getUserID(UserServiceInterface $service): ?int
 {

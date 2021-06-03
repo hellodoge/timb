@@ -15,7 +15,7 @@ $service_config = new ServiceConfig();
 $service_config->user->secret_key = $_ENV['SECRET_KEY'];
 $service = new Service($repository, $service_config);
 $handlers = new Handler($service);
-$router = initRoutes($handlers);
+$router = initRoutes($handlers, $service);
 
 $requestPath = parse_url($_SERVER['REQUEST_URI'])['path'];
 $method = $_SERVER['REQUEST_METHOD'];
