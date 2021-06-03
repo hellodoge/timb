@@ -3,6 +3,7 @@
 namespace service;
 
 use http\Exception\InvalidArgumentException;
+use models\Post;
 use repository\models\PostRepositoryInterface;
 
 class PostService implements PostServiceInterface
@@ -26,5 +27,10 @@ class PostService implements PostServiceInterface
         }
 
         return $this->repo->getRecent($limit, $offset);
+    }
+
+    public function getPostByID(int $id): ?Post
+    {
+        return $this->repo->getPostByID($id);
     }
 }
