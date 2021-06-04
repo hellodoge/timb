@@ -18,6 +18,9 @@ class PostService implements PostServiceInterface
         $this->repo = $repo;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getRecent(int $limit, int $offset): array
     {
         if ($limit < 0)
