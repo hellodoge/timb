@@ -24,13 +24,9 @@ class PostService implements PostServiceInterface
     public function getRecent(int $limit, int $offset): array
     {
         if ($limit < 0)
-        {
             throw new InvalidArgumentException("'limit' mut not be negative");
-        }
         if ($offset < 0)
-        {
             throw new InvalidArgumentException("'offset' mut not be negative");
-        }
 
         return $this->repo->getRecent($limit, $offset);
     }
